@@ -4,11 +4,23 @@
     <body>
         <%- include('includes/header') %>
         <main>
-            <h2>Welcome to Dashboard</h2>
-            <p>
-                Hello, <%= user.username%>. 
-                Feel free to vent out your thoughts and feelings here.
-            </p>
+            <% if (posts.length == 0) { %>
+                <h4>Hello <%= user.username %>, you have no posts yet.</h4>
+            <% } else { %>
+                <% if (posts.length == 1) { %>
+                    <h4>Hello <%= user.username %>, you have one post.</h4>
+                <% } else { %>
+                    <h4>Hello <%= user.username %>, you have <%= posts.length %> posts.</h4>
+                <% } %>
+                <ul>
+                    <% posts.forEach(post => { %>
+                        <li>
+                            <a href='/post/<%= post.id %>'><%= post.title %></a> on 
+                            <%= new Date(post.createdDate).getMonth() + 1 %>/<%= new Date(post.createdDate).getDate() %>/<%= new Date(post.createdDate).getFullYear() %>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
         </main>
     </body>
     <%- include('includes/footer') %>
